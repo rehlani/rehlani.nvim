@@ -1,0 +1,12 @@
+
+snippet rfc "React functional component"
+  interface ${1:ComponentName}Props {
+
+  }
+
+  export const ${2:$1}: React.FC<${3:$l}Props> = ({}) => {
+    ${0}
+  }
+
+snippet ust "Use state wrapper"
+  const [$1, set${1/(.)/${1:/capitalize}/}] = React.useState($2)
