@@ -110,5 +110,12 @@ end
 
 vim.api.nvim_create_user_command('OrganizeImports', organize_imports, {})
 
+lsp.set_sign_icons({
+  error = '✘',
+  warn = '▲',
+  hint = '⚑',
+  info = '»'
+})
+
 lsp.setup()
 

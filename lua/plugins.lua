@@ -21,6 +21,8 @@ return require('packer').startup(function(use)
   }
   use { "ellisonleao/gruvbox.nvim" }
 
+  use {'Mofiqul/dracula.nvim'}
+
   use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' })
   use('tpope/vim-fugitive')
 
@@ -84,6 +86,7 @@ return require('packer').startup(function(use)
 
   use {'saadparwaiz1/cmp_luasnip'}
 
+  use "lukas-reineke/indent-blankline.nvim"
 
   use {'David-Kunz/jester'}
 
