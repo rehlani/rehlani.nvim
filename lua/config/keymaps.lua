@@ -41,3 +41,29 @@ end, { desc = "Git blame line" })
 map({ "n", "v" }, "<leader>gl", function()
   require("gitsigns").toggle_current_line_blame()
 end, { desc = "Toggle blame current line" })
+
+-- harpoon
+map({ "n", "v" }, "<leader>ma", function()
+  require("harpoon.mark").add_file()
+end, { desc = "Add current file to harpoon" })
+map({ "n", "v" }, "<leader>m1", function()
+  require("harpoon.ui").nav_file(1)
+end, { desc = "Navigate to file 1" })
+map({ "n", "v" }, "<leader>m2", function()
+  require("harpoon.ui").nav_file(2)
+end, { desc = "Navigate to file 2" })
+map({ "n", "v" }, "<leader>m3", function()
+  require("harpoon.ui").nav_file(3)
+end, { desc = "Navigate to file 3" })
+
+map({ "n", "v" }, "<leader>mm", function()
+  require("harpoon.ui").toggle_quick_menu()
+end, { desc = "Toggle quick menu" })
+
+map({ "n", "v" }, "<leader>mf", function()
+  require("harpoon.ui").nav_next() -- navigates to next mark
+end, { desc = "Next file" })
+
+map({ "n", "v" }, "<leader>mb", function()
+  require("harpoon.ui").nav_prev() -- navigates to next mark
+end, { desc = "Previous file" })
