@@ -67,3 +67,14 @@ end, { desc = "Next file" })
 map({ "n", "v" }, "<leader>mb", function()
   require("harpoon.ui").nav_prev() -- navigates to next mark
 end, { desc = "Previous file" })
+
+map({ "n"}, "<leader>E", "<cmd>Oil<cr>")
+
+-- missing keymap for snakecase
+map({ "n", "v"}, "gas", function () 
+  require("textcase").current_word('to_snake_case')
+end, {desc = "Convert to snake_case"})
+
+map({ "n", "v"}, "gaS", function () 
+  require("textcase").lsp_rename('to_snake_case')
+end, {desc = "Lsp rename to snake_case"})

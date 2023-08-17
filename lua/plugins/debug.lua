@@ -1,35 +1,52 @@
 return {
-  {
-    "microsoft/vscode-js-debug",
-    opt = true,
-    run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
+  "mfussenegger/nvim-dap",
+  optional = true,
+  dependencies = {
+    {
+      "williamboman/mason.nvim",
+      opts = function(_, opts)
+        opts.ensure_installed = opts.ensure_installed or {}
+        table.insert(opts.ensure_installed, "js-debug-adapter")
+      end,
+    },
   },
-  {
-    "mxsdev/nvim-dap-vscode-js",
-    dependencies = { "mfussenegger/nvim-dap" },
-    config = function()
-      require("dap-vscode-js").setup({
-        adapters = { "pwa-node", "pwa-chrome" }, -- which adapters to register in nvim-dap
-      })
-
-      for _, language in ipairs({ "typescript", "javascript" }) do
-        require("dap").configurations[language] = {
+  opts = function()
+    local dap = require("dap")
+    if not dap.adapters["pwa-node"] then
+      require("dap").adapters["pwa-node"] = {
+        type = "server",
+        host = "localhost",
+        port = "${port}",
+        executable = {
+          command = "node",
+          -- 💀 Make sure to update this path to point to your installation
+          args = {
+            require("mason-registry").get_package("js-debug-adapter"):get_install_path()
+              .. "/js-debug/src/dapDebugServer.js",
+            "${port}",
+          },
+        },
+      }
+    end
+    for _, language in ipairs({ "typescript", "javascript" }) do
+      if not dap.configurations[language] then
+        dap.configurations[language] = {
           {
-            type = "pwa-chrome",
+            type = "pwa-node",
             request = "launch",
-            name = "Launch chrome file",
+            name = "Launch file",
             program = "${file}",
             cwd = "${workspaceFolder}",
           },
           {
             type = "pwa-node",
             request = "attach",
-            name = "Attach to chrome",
+            name = "Attach",
             processId = require("dap.utils").pick_process,
             cwd = "${workspaceFolder}",
           },
         }
       end
-    end,
-  },
+    end
+  end,
 }
