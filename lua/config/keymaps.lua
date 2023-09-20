@@ -15,6 +15,12 @@ end
 -- clipboard
 map({ "n", "v" }, "<leader>y", '"*y', { desc = "Yank to system clipboard", noremap = false })
 
+-- Splits
+map({ "n", "v" }, "<C-h>", "<C-w>h")
+map({ "n", "v" }, "<C-l>", "<C-w>l")
+map({ "n", "v" }, "<C-k>", "<C-w>k")
+map({ "n", "v" }, "<C-j>", "<C-w>j")
+
 -- jest testing
 map("n", "<leader>jr", function()
   require("jester").run()
@@ -78,3 +84,11 @@ end, {desc = "Convert to snake_case"})
 map({ "n", "v"}, "gaS", function () 
   require("textcase").lsp_rename('to_snake_case')
 end, {desc = "Lsp rename to snake_case"})
+
+-- telescrope
+map({"n", "v"}, "<leader>e", function()
+  require("telescope").extensions.file_browser.file_browser({path='%:p:h'})
+end)
+map({"n", "v"}, "<leader>E", function()
+  require("telescope").extensions.file_browser.file_browser()
+end)
