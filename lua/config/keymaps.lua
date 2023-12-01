@@ -14,6 +14,7 @@ end
 
 -- clipboard
 map({ "n", "v" }, "<leader>y", '"*y', { desc = "Yank to system clipboard", noremap = false })
+map({ "n", "v" }, "<leader>p", '"*p', { desc = "Paste from clipboard", noremap = false })
 
 -- Splits
 map({ "n", "v" }, "<C-h>", "<C-w>h")
@@ -51,6 +52,8 @@ end, { desc = "Toggle blame current line" })
 -- harpoon
 map({ "n", "v" }, "<leader>ma", function()
   require("harpoon.mark").add_file()
+  local current_file = vim.fn.expand("%")
+  print("Added " .. current_file .. " to harpoon")
 end, { desc = "Add current file to harpoon" })
 map({ "n", "v" }, "<leader>m1", function()
   require("harpoon.ui").nav_file(1)
@@ -92,3 +95,12 @@ end)
 map({"n", "v"}, "<leader>E", function()
   require("telescope").extensions.file_browser.file_browser()
 end)
+
+-- Open Vscode
+vim.api.nvim_create_user_command("VsCode", function()
+  local file_name = vim.api.nvim_buf_get_name(0)
+
+  os.execute("code " .. file_name)
+end, {})
+
+
