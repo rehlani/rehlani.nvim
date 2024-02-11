@@ -1,3 +1,6 @@
+return {
+    'gptlang/CopilotChat.nvim',
+}
 -- return {
 --   "zbirenbaum/copilot.lua",
 --   cmd = "Copilot",

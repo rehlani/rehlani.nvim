@@ -41,6 +41,8 @@ end, { desc = "Jest: debug test" })
 
 map("n", "<leader>h", "<cmd>nohlsearch<cr>", { desc = "clear highlights" })
 
+map("n", "<leader>bc", "<cmd>%bd|e#<cr>", { desc = "clear other buffers" })
+
 map({ "n" }, "<leader>gb", function()
   require("gitsigns").blame_line()
 end, { desc = "Git blame line" })
@@ -77,23 +79,26 @@ map({ "n", "v" }, "<leader>mb", function()
   require("harpoon.ui").nav_prev() -- navigates to next mark
 end, { desc = "Previous file" })
 
-map({ "n"}, "<leader>E", "<cmd>Oil<cr>")
+map({ "n" }, "<leader>E", "<cmd>Oil<cr>")
 
 -- missing keymap for snakecase
-map({ "n", "v"}, "gas", function () 
-  require("textcase").current_word('to_snake_case')
-end, {desc = "Convert to snake_case"})
+map({ "n", "v" }, "gas", function()
+  require("textcase").current_word("to_snake_case")
+end, { desc = "Convert to snake_case" })
 
-map({ "n", "v"}, "gaS", function () 
-  require("textcase").lsp_rename('to_snake_case')
-end, {desc = "Lsp rename to snake_case"})
+map({ "n", "v" }, "gaS", function()
+  require("textcase").lsp_rename("to_snake_case")
+end, { desc = "Lsp rename to snake_case" })
 
 -- telescrope
-map({"n", "v"}, "<leader>e", function()
-  require("telescope").extensions.file_browser.file_browser({path='%:p:h'})
+map({ "n", "v" }, "<leader>e", function()
+  require("telescope").extensions.file_browser.file_browser({ path = "%:p:h" })
 end)
-map({"n", "v"}, "<leader>E", function()
+map({ "n", "v" }, "<leader>E", function()
   require("telescope").extensions.file_browser.file_browser()
+end)
+map({ "n", "v" }, "<leader><space>", function()
+  require("telescope.builtin").find_files()
 end)
 
 -- Open Vscode
@@ -103,4 +108,19 @@ vim.api.nvim_create_user_command("VsCode", function()
   os.execute("code " .. file_name)
 end, {})
 
+-- Copilot Chat
+vim.api.nvim_create_user_command("CChat", function()
+  vim.cmd("vsplit")
+  vim.cmd("CopilotChat")
+end, {})
 
+-- Monorepo
+vim.keymap.set("n", "<leader>nm", function()
+  require("telescope").extensions.monorepo.monorepo()
+end, { desc = "Monorepo: find project" })
+vim.keymap.set("n", "<leader>nn", function()
+  require("monorepo").toggle_project()
+end, { desc = "Monorepo: toggle project" })
+vim.keymap.set("n", "<leader>na", function()
+  require("monorepo").add_project()
+end, { desc = "Monorepo: add project" })
